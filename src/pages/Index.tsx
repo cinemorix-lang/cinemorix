@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Preloader from "@/components/Preloader";
 import HeroSection from "@/components/HeroSection";
@@ -18,6 +19,9 @@ const Index = () => {
 
   return (
     <>
+      {/* SEO Meta Tags */}
+      <SEO />
+
       {/* Custom cursor - only on desktop */}
       <div className="hidden lg:block">
         <CustomCursor />
