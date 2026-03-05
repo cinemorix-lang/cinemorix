@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -17,6 +17,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,6 +36,27 @@ const Navbar = () => {
     behavior: "smooth", // remove "smooth" if you want instant scroll
   });
 }, [location.pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      // Lock body scroll
+      document.body.style.overflow = "hidden";
+      
+      // Reset mobile menu scroll position to top
+      if (mobileMenuRef.current) {
+        mobileMenuRef.current.scrollTop = 0;
+      }
+    } else {
+      // Restore body scroll
+      document.body.style.overflow = "auto";
+    }
+
+    // Cleanup: restore scroll on unmount
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   return (
     <motion.nav
@@ -148,17 +170,18 @@ const Navbar = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-background/80 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 bg-background/80 backdrop-blur-sm lg:hidden z-40"
               onClick={() => setIsOpen(false)}
             />
 
             {/* Panel */}
             <motion.div
+              ref={mobileMenuRef}
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-[300px] bg-card border-l border-border lg:hidden overflow-y-auto"
+              className="fixed top-0 right-0 h-screen w-[300px] bg-card border-l border-border lg:hidden overflow-y-auto z-50"
             >
               <div className="p-6 pt-20">
                 <ul className="flex flex-col gap-2">
