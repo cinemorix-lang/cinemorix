@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 200 16% 10%;
+    --foreground: 160 10% 90%;
+
+    --card: 200 16% 14%;
+    --card-foreground: 160 10% 90%;
+
+    --popover: 200 16% 14%;
+    --popover-foreground: 160 10% 90%;
+
+    --primary: 156 33% 72%;
+    --primary-foreground: 200 16% 10%;
+
+    --secondary: 200 16% 19%;
+    --secondary-foreground: 160 10% 90%;
+
+    --muted: 200 12% 18%;
+    --muted-foreground: 200 10% 55%;
+
+    --accent: 156 33% 72%;
+    --accent-foreground: 200 16% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 200 12% 22%;
+    --input: 200 12% 22%;
+    --ring: 156 33% 72%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 200 16% 12%;
+    --sidebar-foreground: 160 10% 90%;
+    --sidebar-primary: 156 33% 72%;
+    --sidebar-primary-foreground: 200 16% 10%;
+    --sidebar-accent: 200 12% 18%;
+    --sidebar-accent-foreground: 160 10% 90%;
+    --sidebar-border: 200 12% 22%;
+    --sidebar-ring: 156 33% 72%;
+
+    /* Custom tokens */
+    --mint: 156 33% 72%;
+    --charcoal: 200 16% 19%;
+    --charcoal-deep: 200 16% 10%;
+    --gradient-mint: linear-gradient(135deg, hsl(156, 33%, 72%), hsl(170, 40%, 60%));
+    --shadow-mint: 0 0 40px hsl(156 33% 72% / 0.15);
+    --shadow-cinematic: 0 20px 60px hsl(200 16% 5% / 0.6);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-gradient-mint {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(156, 33%, 72%), hsl(170, 40%, 65%));
+  }
+
+  .bg-gradient-mint {
+    background: linear-gradient(135deg, hsl(156, 33%, 72%), hsl(170, 40%, 60%));
+  }
+
+  .border-gradient-mint {
+    border-image: linear-gradient(135deg, hsl(156, 33%, 72%), hsl(170, 40%, 60%)) 1;
+  }
+
+  .glow-mint {
+    box-shadow: 0 0 40px hsl(156 33% 72% / 0.15), 0 0 80px hsl(156 33% 72% / 0.05);
+  }
+
+  .cinematic-overlay {
+    background: linear-gradient(180deg, hsl(200 16% 10% / 0.7) 0%, hsl(200 16% 10% / 0.4) 50%, hsl(200 16% 10% / 0.9) 100%);
+  }
+}
