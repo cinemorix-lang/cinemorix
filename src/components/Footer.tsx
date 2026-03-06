@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 const quickLinks = [
   { label: "Home", href: "/" },
-  { label: "Graphics Design", href: "/graphics-design" },
-  { label: "3D & Animation", href: "/3d-modeling-animation" },
+  { label: "Graphics Design", href: "/graphic-design" },
+  { label: "3D & Animation", href: "/3d-animation" },
   { label: "Video Production", href: "/video-production" },
-  { label: "Our Client Work", href: "/our-client-work" },
+  { label: "Our Client Work", href: "/client-works" },
   { label: "Team", href: "/team" },
   { label: "Contact", href: "/contact" },
 ];
