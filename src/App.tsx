@@ -47,7 +47,7 @@ const AnimatedRoutes = () => {
           }
         />
         <Route
-          path="/graphics-design"
+          path="/graphic-design"
           element={
             <PageTransition>
               <GraphicsDesign />
@@ -55,7 +55,7 @@ const AnimatedRoutes = () => {
           }
         />
         <Route
-          path="/3d-modeling-animation"
+          path="/3d-animation"
           element={
             <PageTransition>
               <ModelingAnimation />
@@ -87,7 +87,7 @@ const AnimatedRoutes = () => {
           }
         />
         <Route
-          path="/our-client-work"
+          path="/client-works"
           element={
             <PageTransition>
               <OurClientWork />
