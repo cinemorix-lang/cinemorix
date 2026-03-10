@@ -1,22 +1,20 @@
-# Welcome to your Lovable project
+# Cinemorix Static Portfolio
+
+This repository contains the source code for the official Cinemorix static portfolio website. It is built with Vite, React, TypeScript and shadcn‑ui components.
+
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+The live site is served from the root of the repository. Ensure the `public/` folder contains the correct branding assets (favicons, logos, etc.) before deploying.
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
 
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+If you want to work locally using your own IDE, you can clone this repo and push changes; the repository behaves like a standard git project.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -62,9 +60,9 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+A static build is produced with `npm run build` and the contents of `dist/` can be deployed to any static hosting provider (GitHub Pages, Netlify, Vercel, etc.).
 
-## Can I connect a custom domain to my Lovable project?
+## Can I connect a custom domain?
 
 Yes, you can!
 
