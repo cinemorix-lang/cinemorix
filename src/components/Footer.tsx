@@ -1,16 +1,8 @@
 import { motion } from "framer-motion";
 import { Instagram, Twitter, Youtube, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const quickLinks = [
-  { label: "Home", href: "/" },
-  { label: "Graphics Design", href: "/graphic-design" },
-  { label: "3D & Animation", href: "/3d-animation" },
-  { label: "Video Production", href: "/video-production" },
-  { label: "Our Client Work", href: "/client-works" },
-  { label: "Team", href: "/team" },
-  { label: "Contact", href: "/contact" },
-];
+import { homeContent } from "@/data/siteContent";
+import { mainNavLinks } from "@/data/navigation";
 
 const socialLinks = [
   { icon: Instagram, href: "https://www.instagram.com/_cinemorix_/", label: "Instagram" },
@@ -20,6 +12,8 @@ const socialLinks = [
 ];
 
 const Footer = () => {
+  const footer = homeContent.footer;
+
   return (
     <footer className="relative bg-card border-t border-border overflow-hidden">
       {/* Decorative background */}
@@ -43,8 +37,7 @@ const Footer = () => {
               </h3>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Premium creative studio crafting cinematic stories that captivate
-              and inspire audiences worldwide.
+              {footer.description}
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -72,7 +65,7 @@ const Footer = () => {
               Quick Links
             </h4>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
+              {mainNavLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     to={link.href}
@@ -129,33 +122,33 @@ const Footer = () => {
                   href="mailto:cinemorix@gmail.com"
                   className="text-muted-foreground text-sm hover:text-primary transition-colors"
                 >
-                  cinemorix@gmail.com
+                  {footer.email}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Phone className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
                 <a
-                  href="tel:+917096306862"
+                  href={`tel:${footer.phonePrimary.replace(/\s/g, "")}`}
                   className="text-muted-foreground text-sm hover:text-primary transition-colors"
                 >
-                  +91 7096306862
+                  {footer.phonePrimary}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Phone className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
                 <a
-                  href="tel:+919913504212"
+                  href={`tel:${footer.phoneSecondary.replace(/\s/g, "")}`}
                   className="text-muted-foreground text-sm hover:text-primary transition-colors"
                 >
-                  +91 99135 04212
+                  {footer.phoneSecondary}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
                 <span className="text-muted-foreground text-sm">
-                   Creative Studio Lane
+                  {footer.addressLine1}
                   <br />
-                  Surat, Gujarat, India
+                  {footer.addressLine2}
                 </span>
               </li>
             </ul>

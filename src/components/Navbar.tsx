@@ -2,16 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Graphics Design", href: "/graphic-design" },
-  { label: "3D & Animation", href: "/3d-animation" },
-  { label: "Video Production", href: "/video-production" },
-  { label: "Our Client Work", href: "/client-works" },
-  { label: "Team", href: "/team" },
-  { label: "Contact", href: "/contact" },
-];
+import { mainNavLinks } from "@/data/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,12 +21,12 @@ const Navbar = () => {
 
   // Close menu on route change
   useEffect(() => {
-  setIsOpen(false);
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth", // remove "smooth" if you want instant scroll
-  });
-}, [location.pathname]);
+    setIsOpen(false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [location.pathname]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -96,7 +87,7 @@ const Navbar = () => {
 
         {/* Desktop nav */}
         <ul className="hidden lg:flex items-center gap-1">
-          {navLinks.slice(0, -1).map((link) => (
+          {mainNavLinks.slice(0, -1).map((link) => (
             <li key={link.label}>
               <Link
                 to={link.href}
@@ -185,7 +176,7 @@ const Navbar = () => {
             >
               <div className="p-6 pt-20">
                 <ul className="flex flex-col gap-2">
-                  {navLinks.map((link, index) => (
+                  {mainNavLinks.map((link, index) => (
                     <motion.li
                       key={link.label}
                       initial={{ opacity: 0, x: 20 }}

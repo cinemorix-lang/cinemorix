@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GlassmorphicCard from "@/components/GlassmorphicCard";
 import FloatingParticles from "@/components/FloatingParticles";
+import SEO from "@/components/SEO";
 
 type MediaItem = {
   id: number;
@@ -101,15 +102,15 @@ const workflow = [
   { icon: Music, title: "Delivery", description: "Final master and distribution formats" },
 ];
 
-const VideoGallerySlider = () => {
+const VideoGallerySlider = ({ items }: { items: MediaItem[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [activeVideo, setActiveVideo] = useState<MediaItem | null>(null);
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
 
   const goTo = (index: number) => setCurrentIndex(index);
-  const next = () => goTo((currentIndex + 1) % videos.length);
-  const prev = () => goTo((currentIndex - 1 + videos.length) % videos.length);
+  const next = () => goTo((currentIndex + 1) % items.length);
+  const prev = () => goTo((currentIndex - 1 + items.length) % items.length);
   const getVideoList = (item: MediaItem) =>
     item.mediaItems && item.mediaItems.length > 0 ? item.mediaItems : [item.mediaUrl];
   const activeVideoList = activeVideo ? getVideoList(activeVideo) : [];
@@ -122,30 +123,38 @@ const VideoGallerySlider = () => {
 
   const openAdjacentProject = (direction: "prev" | "next") => {
     if (!activeVideo) return;
-    const activeProjectIndex = videos.findIndex((item) => item.id === activeVideo.id);
+    const activeProjectIndex = items.findIndex((item) => item.id === activeVideo.id);
     if (activeProjectIndex === -1) return;
 
     const targetIndex =
       direction === "next"
-        ? (activeProjectIndex + 1) % videos.length
-        : (activeProjectIndex - 1 + videos.length) % videos.length;
+        ? (activeProjectIndex + 1) % items.length
+        : (activeProjectIndex - 1 + items.length) % items.length;
 
     setCurrentIndex(targetIndex);
-    setActiveVideo(videos[targetIndex]);
+      setActiveVideo(items[targetIndex]);
     setActiveMediaIndex(0);
   };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + items.length) % items.length);
+      }
+      if (e.key === "ArrowRight") {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
+      }
       if (e.key === "Escape") closeViewer();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentIndex]);
+  }, [items.length]);
 
-  const currentVideo = videos[currentIndex];
+  const currentVideo = items[currentIndex];
+
+  if (!currentVideo) {
+    return <p className="text-center text-slate-400">No video portfolio records found.</p>;
+  }
 
   return (
     <>
@@ -219,7 +228,7 @@ const VideoGallerySlider = () => {
 
         {/* Dots */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-          {videos.map((_, index) => (
+          {items.map((_, index) => (
             <button
               key={index}
               onClick={() => goTo(index)}
@@ -342,8 +351,11 @@ const VideoGallerySlider = () => {
 };
 
 const VideoProduction = () => {
+  const renderedVideos: MediaItem[] = videos;
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO pageKey="video-production" />
       <Navbar />
 
       {/* Hero Section */}
@@ -397,7 +409,7 @@ const VideoProduction = () => {
             </h2>
           </motion.div>
 
-          <VideoGallerySlider />
+          <VideoGallerySlider items={renderedVideos} />
         </div>
       </section>
 

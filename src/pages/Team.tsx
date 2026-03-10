@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GlassmorphicCard from "@/components/GlassmorphicCard";
 import FloatingParticles from "@/components/FloatingParticles";
+import SEO from "@/components/SEO";
 
 const founders = [
   {
@@ -62,8 +63,12 @@ const teamMembers = [
 ];
 
 const Team = () => {
+  const renderedFounders = founders;
+  const renderedTeamMembers = teamMembers;
+
   return (
     <div className="min-h-screen bg-background relative">
+      <SEO pageKey="team" />
       <Navbar />
 
       {/* Animated Background */}
@@ -120,7 +125,7 @@ const Team = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {founders.map((founder, index) => (
+            {renderedFounders.map((founder, index) => (
               <motion.div
                 key={founder.name}
                 initial={{ opacity: 0, y: 30 }}
@@ -173,6 +178,12 @@ const Team = () => {
               </motion.div>
             ))}
           </div>
+
+          {renderedFounders.length === 0 && (
+            <p className="text-center text-sm text-muted-foreground">
+              No founders available.
+            </p>
+          )}
         </div>
       </section>
 
@@ -194,7 +205,7 @@ const Team = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {teamMembers.map((member, index) => (
+            {renderedTeamMembers.map((member, index) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 30 }}
@@ -247,6 +258,12 @@ const Team = () => {
               </motion.div>
             ))}
           </div>
+
+          {renderedTeamMembers.length === 0 && (
+            <p className="text-center text-sm text-muted-foreground">
+              No team members available.
+            </p>
+          )}
         </div>
       </section>
 

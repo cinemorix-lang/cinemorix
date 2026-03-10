@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GlassmorphicCard from "@/components/GlassmorphicCard";
 import FloatingParticles from "@/components/FloatingParticles";
+import SEO from "@/components/SEO";
 
 const clientWorks = [
   {
@@ -27,8 +28,11 @@ const clientWorks = [
 ];
 
 const OurClientWork = () => {
+  const renderedClientWorks = clientWorks;
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO pageKey="client-work" />
       <Navbar />
 
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
@@ -78,7 +82,7 @@ const OurClientWork = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {clientWorks.map((item, index) => (
+            {renderedClientWorks.map((item, index) => (
               <GlassmorphicCard key={item.client + item.project} hoverEffect="lift" delay={index * 0.08}>
                 <div className="p-7">
                   <div className="flex items-center gap-2 mb-4">
@@ -103,6 +107,12 @@ const OurClientWork = () => {
               </GlassmorphicCard>
             ))}
           </div>
+
+          {renderedClientWorks.length === 0 && (
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              No client work records available.
+            </p>
+          )}
         </div>
       </section>
 

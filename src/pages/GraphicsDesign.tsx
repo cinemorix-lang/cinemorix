@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GlassmorphicCard from "@/components/GlassmorphicCard";
 import FloatingParticles from "@/components/FloatingParticles";
+import SEO from "@/components/SEO";
 
 const services = [
   {
@@ -151,6 +152,8 @@ const portfolioItems: PortfolioItem[] = [
 ];
 
 const GraphicsDesign = () => {
+  const renderedItems: PortfolioItem[] = portfolioItems;
+
   const [activeItem, setActiveItem] = useState<PortfolioItem | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
@@ -165,15 +168,15 @@ const GraphicsDesign = () => {
 
   const openItem = (index: number) => {
     setActiveIndex(index);
-    setActiveItem(portfolioItems[index]);
+    setActiveItem(renderedItems[index]);
     setCurrentMediaIndex(0);
   };
 
   const goToItem = (index: number) => {
-    const totalItems = portfolioItems.length;
+    const totalItems = renderedItems.length;
     const nextIndex = (index + totalItems) % totalItems;
     setActiveIndex(nextIndex);
-    setActiveItem(portfolioItems[nextIndex]);
+    setActiveItem(renderedItems[nextIndex]);
     setCurrentMediaIndex(0);
   };
 
@@ -207,8 +210,14 @@ const GraphicsDesign = () => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeModal();
       if (!activeItem) return;
-      if (e.key === "ArrowLeft") prevMedia();
-      if (e.key === "ArrowRight") nextMedia();
+      if (e.key === "ArrowLeft") {
+        if (activeMediaList.length === 0) return;
+        setCurrentMediaIndex((prev) => (prev - 1 + activeMediaList.length) % activeMediaList.length);
+      }
+      if (e.key === "ArrowRight") {
+        if (activeMediaList.length === 0) return;
+        setCurrentMediaIndex((prev) => (prev + 1) % activeMediaList.length);
+      }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
@@ -216,6 +225,7 @@ const GraphicsDesign = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO pageKey="graphics-design" />
       <Navbar />
 
       {/* Hero Section */}
@@ -270,7 +280,7 @@ const GraphicsDesign = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {portfolioItems.map((item, index) => (
+            {renderedItems.map((item, index) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 30 }}
@@ -305,6 +315,12 @@ const GraphicsDesign = () => {
               </motion.div>
             ))}
           </div>
+
+          {renderedItems.length === 0 && (
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              No graphics projects available.
+            </p>
+          )}
         </div>
       </section>
 

@@ -18,6 +18,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GlassmorphicCard from "@/components/GlassmorphicCard";
 import FloatingParticles from "@/components/FloatingParticles";
+import SEO from "@/components/SEO";
 
 type MediaItem = {
   id: number;
@@ -163,7 +164,7 @@ const workflow = [
   { icon: Sparkles, title: "Rendering & Post", description: "Final output and polish" },
 ];
 
-const VideoSlider = () => {
+const VideoSlider = ({ items }: { items: MediaItem[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [activeItem, setActiveItem] = useState<MediaItem | null>(null);
@@ -172,10 +173,10 @@ const VideoSlider = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const goTo = (index: number) => setCurrentIndex(index);
-  const next = () => goTo((currentIndex + 1) % videos.length);
-  const prev = () => goTo((currentIndex - 1 + videos.length) % videos.length);
+  const next = () => goTo((currentIndex + 1) % items.length);
+  const prev = () => goTo((currentIndex - 1 + items.length) % items.length);
 
-  const currentItem = videos[currentIndex];
+  const currentItem = items[currentIndex];
 
   const closeModal = () => {
     setActiveItem(null);
@@ -214,21 +215,26 @@ const VideoSlider = () => {
 
   const openAdjacentProject = (direction: "prev" | "next") => {
     if (!activeItem) return;
-    const activeProjectIndex = videos.findIndex((item) => item.id === activeItem.id);
+    const activeProjectIndex = items.findIndex((item) => item.id === activeItem.id);
     if (activeProjectIndex === -1) return;
 
     const targetIndex =
       direction === "next"
-        ? (activeProjectIndex + 1) % videos.length
-        : (activeProjectIndex - 1 + videos.length) % videos.length;
+        ? (activeProjectIndex + 1) % items.length
+        : (activeProjectIndex - 1 + items.length) % items.length;
 
-    setActiveItem(videos[targetIndex]);
+    setActiveItem(items[targetIndex]);
     setCurrentIndex(targetIndex);
     setActiveMediaIndex(0);
   };
 
+  if (!currentItem) {
+    return <p className="text-center text-slate-400">No 3D/Animation projects found.</p>;
+  }
+
   return (
     <>
+      <SEO pageKey="3d-animation" />
       <div
         ref={sliderRef}
         className="relative w-full aspect-video max-h-[78vh] rounded-2xl overflow-hidden cursor-pointer"
@@ -319,7 +325,7 @@ const VideoSlider = () => {
 
         {/* Progress dots (no duration class usage) */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-          {videos.map((_, index) => (
+          {items.map((_, index) => (
             <button
               key={index}
               onClick={(e) => {
@@ -468,6 +474,8 @@ const VideoSlider = () => {
 };
 
 const ModelingAnimation = () => {
+  const renderedVideos: MediaItem[] = videos;
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -520,7 +528,7 @@ const ModelingAnimation = () => {
             </h2>
           </motion.div>
 
-          <VideoSlider />
+          <VideoSlider items={renderedVideos} />
         </div>
       </section>
 

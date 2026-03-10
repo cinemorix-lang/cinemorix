@@ -72,6 +72,7 @@ const projects: Project[] = [
 
 const PortfolioSection = () => {
   const [activeItem, setActiveItem] = useState<Project | null>(null);
+  const renderedProjects = projects;
 
   const closeModal = () => setActiveItem(null);
 
@@ -105,7 +106,7 @@ const PortfolioSection = () => {
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projects.map((project, index) => (
+          {renderedProjects.map((project, index) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 30 }}
@@ -166,6 +167,12 @@ const PortfolioSection = () => {
             </motion.div>
           ))}
         </div>
+
+        {renderedProjects.length === 0 && (
+          <p className="mt-6 text-center text-sm text-muted-foreground">
+            No featured projects available.
+          </p>
+        )}
       </div>
 
       {/* Modal for BOTH image + video */}

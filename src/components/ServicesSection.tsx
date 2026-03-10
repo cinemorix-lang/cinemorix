@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import {
   Film,
-  Camera,
   Palette,
   Monitor,
   Package,
@@ -81,6 +80,8 @@ const itemVariants = {
 };
 
 const ServicesSection = () => {
+  const renderedServices = services;
+
   return (
     <section id="services" className="py-24 lg:py-32 bg-secondary">
       <div className="container mx-auto px-4">
@@ -106,7 +107,7 @@ const ServicesSection = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {services.map((service) => (
+          {renderedServices.map((service) => (
             <motion.div
               key={service.title}
               variants={itemVariants}
@@ -124,6 +125,12 @@ const ServicesSection = () => {
             </motion.div>
           ))}
         </motion.div>
+
+        {renderedServices.length === 0 && (
+          <p className="mt-6 text-center text-sm text-muted-foreground">
+            No services available.
+          </p>
+        )}
       </div>
     </section>
   );

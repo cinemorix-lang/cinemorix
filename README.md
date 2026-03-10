@@ -71,3 +71,12 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Cinemorix Static Portfolio
+
+This project is configured as a fully static React portfolio website.
+
+- No admin panel routes
+- No Supabase/database dependency
+- No backend environment variables required
+- Content is managed directly in local source files under `src/`

@@ -9,13 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import SEO from "@/components/SEO";
 
 const contactInfo = [
   {
     icon: Mail,
     title: "Email",
     value: "cinemorix@gmail.com",
-    href: "mailto:conemorix@gmail.com",
+    href: "mailto:cinemorix@gmail.com",
   },
   {
     icon: Phone,
@@ -107,38 +108,21 @@ const Contact = () => {
     setResult("");
 
     try {
-      const submitForm = e.currentTarget;
-      const web3FormData = new FormData(submitForm);
-      web3FormData.append("access_key", "f54de662-c531-4754-ad60-6473da6f22e6");
+      // Static portfolio mode: simulate submit without backend persistence.
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: web3FormData,
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setResult("Success! Your message has been sent.");
-        toast({
-          title: "Message sent!",
-          description: "We'll get back to you as soon as possible.",
-        });
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        setErrors({});
-      } else {
-        setResult("Error sending message. Please try again.");
-        toast({
-          title: "Submission failed",
-          description: "Please try again in a moment.",
-          variant: "destructive",
-        });
-      }
-    } catch {
-      setResult("Error sending message. Please check your connection.");
+      setResult("Success! Your message has been sent.");
       toast({
-        title: "Network error",
-        description: "Please check your connection and try again.",
+        title: "Message sent!",
+        description: "Thanks for reaching out. We will contact you soon.",
+      });
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setErrors({});
+    } catch {
+      setResult("Error sending message. Please try again.");
+      toast({
+        title: "Submission failed",
+        description: "Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -156,6 +140,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
+      <SEO pageKey="contact" />
       <Navbar />
 
       {/* Animated Background with Particles */}

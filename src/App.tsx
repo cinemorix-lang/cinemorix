@@ -1,7 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Index from "./pages/Index";
@@ -14,7 +13,15 @@ import OurClientWork from "./pages/OurClientWork";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
-const queryClient = new QueryClient();
+const appRoutes = [
+  { path: "/", Component: Index },
+  { path: "/graphic-design", Component: GraphicsDesign },
+  { path: "/3d-animation", Component: ModelingAnimation },
+  { path: "/video-production", Component: VideoProduction },
+  { path: "/team", Component: Team },
+  { path: "/contact", Component: Contact },
+  { path: "/client-works", Component: OurClientWork },
+] as const;
 
 // Page transition wrapper
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
@@ -38,62 +45,17 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <ScrollToTop />
       <Routes location={location} key={location.pathname}>
-        <Route
-          path="/"
-          element={
-            <PageTransition>
-              <Index />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/graphic-design"
-          element={
-            <PageTransition>
-              <GraphicsDesign />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/3d-animation"
-          element={
-            <PageTransition>
-              <ModelingAnimation />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/video-production"
-          element={
-            <PageTransition>
-              <VideoProduction />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/team"
-          element={
-            <PageTransition>
-              <Team />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <PageTransition>
-              <Contact />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/client-works"
-          element={
-            <PageTransition>
-              <OurClientWork />
-            </PageTransition>
-          }
-        />
+        {appRoutes.map(({ path, Component }) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <PageTransition>
+                <Component />
+              </PageTransition>
+            }
+          />
+        ))}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
@@ -101,15 +63,13 @@ const AnimatedRoutes = () => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AnimatedRoutes />
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <TooltipProvider>
+    <Toaster />
+    <Sonner />
+    <BrowserRouter>
+      <AnimatedRoutes />
+    </BrowserRouter>
+  </TooltipProvider>
 );
 
 export default App;

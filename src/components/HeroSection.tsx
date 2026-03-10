@@ -1,8 +1,10 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import heroBg from "@/assets/hero-bg.jpg";
+import { homeContent } from "@/data/siteContent";
 
 const HeroSection = () => {
   const { scrollYProgress } = useScroll();
+  const hero = homeContent.hero;
   
   // Parallax effects
   const bgY = useTransform(scrollYProgress, [0, 0.5], ["0%", "30%"]);
@@ -10,7 +12,7 @@ const HeroSection = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
 
   // Headline text for infinite scroll
-  const headlineText = "VISUALISE YOUR VISION.";
+  const headlineText = hero.headlineText;
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -20,7 +22,7 @@ const HeroSection = () => {
         style={{ y: bgY }}
       >
         <img
-          src={heroBg}
+          src={hero.imageUrl || heroBg}
           alt="Cinematic studio"
           className="w-full h-full object-cover scale-110"
           loading="eager"
@@ -60,7 +62,7 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-primary font-medium tracking-[0.3em] uppercase text-sm mb-6"
         >
-          Creative Film Studio
+          {hero.subtitle}
         </motion.p>
 
         <motion.h1
@@ -69,7 +71,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="font-display text-5xl sm:text-6xl lg:text-8xl font-bold leading-tight mb-6"
         >
-          We Craft
+          {(hero.title || "We Craft Cinematic Stories").split("Cinematic")[0] || "We Craft"}
           <br />
           <motion.span 
             className="text-gradient-mint inline-block"
@@ -83,7 +85,8 @@ const HeroSection = () => {
             transition={{ duration: 3, repeat: Infinity }}
           >
             Cinematic
-          </motion.span> Stories
+          </motion.span>{" "}
+          {hero.title?.includes("Cinematic") ? hero.title.split("Cinematic")[1] : "Stories"}
         </motion.h1>
 
         <motion.p
@@ -92,8 +95,7 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto mb-10"
         >
-          From concept to screen, we bring your vision to life with stunning visuals
-          and compelling narratives.
+          {hero.description}
         </motion.p>
 
         <motion.div
@@ -103,12 +105,12 @@ const HeroSection = () => {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <motion.a
-            href="#portfolio"
+            href={hero.ctaLink}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
             className="bg-gradient-mint text-primary-foreground px-8 py-3.5 rounded-md font-semibold text-base hover:shadow-[0_0_30px_hsl(156_33%_72%/0.3)] transition-all duration-300"
           >
-            View Our Work
+            {hero.ctaLabel}
           </motion.a>
           <motion.a
             href="#services"

@@ -1,4 +1,4 @@
-import { motion, useScroll } from "framer-motion";
+import { motion, useScroll, type MotionValue } from "framer-motion";
 import { useRef } from "react";
 
 interface AboutPanel {
@@ -226,7 +226,7 @@ const PinnedPanel = ({
 }: {
   panel: AboutPanel;
   index: number;
-  scrollYProgress: any;
+  scrollYProgress: MotionValue<number>;
   startProgress: number;
   endProgress: number;
 }) => {

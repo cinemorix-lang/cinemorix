@@ -20,7 +20,7 @@ const Index = () => {
   return (
     <>
       {/* SEO Meta Tags */}
-      <SEO />
+      <SEO pageKey="home" />
 
       {/* Custom cursor - only on desktop */}
       <div className="hidden lg:block">
