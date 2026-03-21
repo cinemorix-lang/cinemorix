@@ -159,7 +159,7 @@ const VideoGallerySlider = ({ items }: { items: MediaItem[] }) => {
   return (
     <>
       <div
-        className="relative w-full aspect-video max-h-[70vh] rounded-2xl overflow-hidden"
+        className="relative w-full aspect-video max-h-[50vh] sm:max-h-[60vh] lg:max-h-[70vh] rounded-2xl overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -214,16 +214,18 @@ const VideoGallerySlider = ({ items }: { items: MediaItem[] }) => {
         {/* Navigation */}
         <button
           onClick={prev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-background/50 backdrop-blur-sm border border-border flex items-center justify-center text-foreground hover:text-primary hover:border-primary/50 transition-all"
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-background/50 backdrop-blur-sm border border-border flex items-center justify-center text-foreground hover:text-primary hover:border-primary/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary"
+          aria-label="Previous video"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-5 sm:w-6 h-5 sm:h-6" />
         </button>
 
         <button
           onClick={next}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-background/50 backdrop-blur-sm border border-border flex items-center justify-center text-foreground hover:text-primary hover:border-primary/50 transition-all"
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-background/50 backdrop-blur-sm border border-border flex items-center justify-center text-foreground hover:text-primary hover:border-primary/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary"
+          aria-label="Next video"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-5 sm:w-6 h-5 sm:h-6" />
         </button>
 
         {/* Dots */}
@@ -245,52 +247,54 @@ const VideoGallerySlider = ({ items }: { items: MediaItem[] }) => {
       {/* ✅ Video Modal */}
       {activeVideo && (
         <div
-          className="fixed inset-0 z-[999] bg-black/70 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[999] bg-black/70 flex items-center justify-center p-2 sm:p-4 overflow-y-auto"
           onClick={closeViewer}
         >
           <div
-            className="relative w-full max-w-7xl bg-background rounded-xl overflow-hidden"
+            className="relative w-full max-w-7xl bg-background rounded-xl overflow-hidden my-4"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeViewer}
-              className="absolute top-3 right-3 z-10 p-2 rounded-full bg-black/50 text-white hover:bg-black/70"
+              className="absolute top-2 sm:top-3 right-2 sm:right-3 z-10 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 focus:outline-none focus:ring-2 focus:ring-primary"
               aria-label="Close media viewer"
             >
               ✕
             </button>
 
-            <div className="grid md:grid-cols-2">
-              <div className="relative bg-black flex items-center justify-center min-h-[360px] md:min-h-[620px] overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+              <div className="relative bg-black flex items-center justify-center min-h-[280px] sm:min-h-[360px] lg:min-h-[620px] overflow-hidden">
                 <video
                   src={currentActiveVideoUrl}
                   controls
                   autoPlay
+                  muted
                   playsInline
-                  className="w-full h-full max-h-[88vh] object-contain bg-black"
+                  preload="metadata"
+                  className="w-full h-full max-h-[60vh] sm:max-h-[75vh] lg:max-h-[88vh] object-contain bg-black"
                 />
 
                 {activeVideoList.length > 1 && (
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-background/60 backdrop-blur-sm px-2 py-2 rounded-xl border border-border">
+                  <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1 sm:gap-2 bg-background/60 backdrop-blur-sm px-2 sm:px-2 py-1 sm:py-2 rounded-xl border border-border">
                     <button
                       onClick={() =>
                         setActiveMediaIndex((prevIndex) =>
                           (prevIndex - 1 + activeVideoList.length) % activeVideoList.length
                         )
                       }
-                      className="w-8 h-8 rounded-md bg-secondary/70 border border-border flex items-center justify-center text-foreground hover:text-primary"
+                      className="w-7 sm:w-8 h-7 sm:h-8 rounded-md bg-secondary/70 border border-border flex items-center justify-center text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
                       aria-label="Previous video"
                     >
-                      <ChevronLeft className="w-4 h-4" />
+                      <ChevronLeft className="w-3 sm:w-4 h-3 sm:h-4" />
                     </button>
 
                     {activeVideoList.map((_, index) => (
                       <button
                         key={index}
                         onClick={() => setActiveMediaIndex(index)}
-                        className={`w-2.5 h-2.5 rounded-full transition-all ${
+                        className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all ${
                           index === activeMediaIndex
-                            ? "bg-primary w-7"
+                            ? "bg-primary w-5 sm:w-7"
                             : "bg-muted-foreground/50 hover:bg-muted-foreground"
                         }`}
                         aria-label={`Open video ${index + 1}`}
@@ -299,31 +303,31 @@ const VideoGallerySlider = ({ items }: { items: MediaItem[] }) => {
 
                     <button
                       onClick={() => setActiveMediaIndex((prevIndex) => (prevIndex + 1) % activeVideoList.length)}
-                      className="w-8 h-8 rounded-md bg-secondary/70 border border-border flex items-center justify-center text-foreground hover:text-primary"
+                      className="w-7 sm:w-8 h-7 sm:h-8 rounded-md bg-secondary/70 border border-border flex items-center justify-center text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
                       aria-label="Next video"
                     >
-                      <ChevronRight className="w-4 h-4" />
+                      <ChevronRight className="w-3 sm:w-4 h-3 sm:h-4" />
                     </button>
                   </div>
                 )}
               </div>
 
-              <div className="p-6 md:p-8 border-t md:border-t-0 md:border-l border-border bg-secondary/30 flex flex-col justify-start items-start text-left">
+              <div className="p-4 sm:p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-border bg-secondary/30 flex flex-col justify-start items-start text-left max-h-[50vh] lg:max-h-[620px] overflow-y-auto">
                 <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium mb-3">
                   Project Details
                 </span>
 
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
                   <button
                     onClick={() => openAdjacentProject("prev")}
-                    className="bg-secondary/60 text-foreground px-3 py-1 rounded-md hover:bg-secondary transition-colors"
+                    className="bg-secondary/60 text-foreground px-3 py-1 rounded-md hover:bg-secondary transition-colors text-sm"
                     aria-label="Previous project"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => openAdjacentProject("next")}
-                    className="bg-secondary/60 text-foreground px-3 py-1 rounded-md hover:bg-secondary transition-colors"
+                    className="bg-secondary/60 text-foreground px-3 py-1 rounded-md hover:bg-secondary transition-colors text-sm"
                     aria-label="Next project"
                   >
                     <ChevronRight className="w-4 h-4" />
@@ -334,12 +338,12 @@ const VideoGallerySlider = ({ items }: { items: MediaItem[] }) => {
                   Project ID: <span className="text-foreground font-medium">{activeVideo.id}</span>
                 </p>
 
-                <h3 className="font-display text-2xl md:text-3xl font-semibold mb-4">{activeVideo.title}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-8">{activeVideo.description}</p>
+                <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-semibold mb-3 sm:mb-4">{activeVideo.title}</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-6 sm:mb-8">{activeVideo.description}</p>
 
-                <div className="px-4 py-2 rounded-lg bg-background border border-border">
-                  <p className="text-sm text-muted-foreground mb-1">Software Used</p>
-                  <p className="text-primary font-medium">{activeVideo.software}</p>
+                <div className="px-4 py-2 rounded-lg bg-background border border-border w-full">
+                  <p className="text-xs text-muted-foreground mb-1">Software Used</p>
+                  <p className="text-primary font-medium text-sm">{activeVideo.software}</p>
                 </div>
               </div>
             </div>
