@@ -203,7 +203,7 @@ const Navbar = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
-                  className="mt-8 pt-8 border-t border-border"
+                  className="mt-8 pt-8 border-t border-border hidden md:block"
                 >
                   <p className="text-muted-foreground text-xs uppercase tracking-wider mb-4">
                     Follow Us
